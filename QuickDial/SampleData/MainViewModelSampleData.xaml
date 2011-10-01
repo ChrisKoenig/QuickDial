@@ -1,0 +1,14 @@
+﻿<QuickDial:MainViewModel xmlns:QuickDial="clr-namespace:QuickDial" IsInDesignMode="True" IsInDesignModeStatic="False">
+	<QuickDial:MainViewModel.Contacts>
+		<QuickDial:Contact Name="Aaberg, Jesper" PhoneNumber="(111) 555-0100" ShowOnQuickLaunch="True"/>
+		<QuickDial:Contact Name="Adams, Ellen" PhoneNumber="(222) 555-0101" ShowOnQuickLaunch="False"/>
+		<QuickDial:Contact Name="Adams, Terry" PhoneNumber="(333) 555-0102" ShowOnQuickLaunch="True"/>
+		<QuickDial:Contact Name="Adams, Terry" PhoneNumber="(444) 555-0103" ShowOnQuickLaunch="False"/>
+		<QuickDial:Contact Name="Penor, Lori" PhoneNumber="(111) 555-0104" ShowOnQuickLaunch="True"/>
+		<QuickDial:Contact Name="Pfeiffer, Michael" PhoneNumber="(222) 555-0105" ShowOnQuickLaunch="False"/>
+		<QuickDial:Contact Name="Philips, Carol" PhoneNumber="(333) 555-0106" ShowOnQuickLaunch="True"/>
+		<QuickDial:Contact Name="Poe, Toni" PhoneNumber="(444) 555-0107" ShowOnQuickLaunch="False"/>
+		<QuickDial:Contact Name="Hicks, Cassie" PhoneNumber="(555) 555-0108" ShowOnQuickLaunch="True"/>
+		<QuickDial:Contact Name="Argentiero, Luca" PhoneNumber="(111) 555-0109" ShowOnQuickLaunch="False"/>
+	</QuickDial:MainViewModel.Contacts>
+</QuickDial:MainViewModel>
