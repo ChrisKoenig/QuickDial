@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using Microsoft.Lync.Model;
-using Microsoft.Lync.Model.Extensibility;
 
 namespace QuickDial
 {
@@ -17,15 +14,16 @@ namespace QuickDial
     {
         private const string STORAGE_FILE = "CONTACTS.DAT";
 
-        private Contact _selectedItem = null;
+        private Contact _selectedItem;
         private ObservableCollection<Contact> _contacts = new ObservableCollection<Contact>();
-        private ObservableCollection<MenuItem> _menuItems = new ObservableCollection<MenuItem>();
 
         public RelayCommand AddCommand { get; set; }
 
         public RelayCommand UpdateCommand { get; set; }
 
         public RelayCommand DeleteCommand { get; set; }
+
+        public RelayCommand ManualDialCommand { get; set; }
 
         public Contact SelectedItem
         {
@@ -101,6 +99,7 @@ namespace QuickDial
             AddCommand = new RelayCommand(() => AddItem(), () => true);
             UpdateCommand = new RelayCommand(() => UpdateItem(), () => true);
             DeleteCommand = new RelayCommand(() => DeleteItem(), () => true);
+            ManualDialCommand = new RelayCommand(() => OpenManualDialer(), () => true);
             LoadContacts();
         }
 
@@ -122,6 +121,12 @@ namespace QuickDial
         private void AddItem()
         {
             Contacts.Add(new Contact());
+        }
+
+        private void OpenManualDialer()
+        {
+            SaveContacts();
+            MessengerInstance.Send<OpenManualDialerMessage>(new OpenManualDialerMessage());
         }
     }
 }

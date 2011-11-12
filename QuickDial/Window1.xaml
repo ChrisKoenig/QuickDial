@@ -77,6 +77,13 @@
                      Padding="5,2,5,2"
                      Command="{Binding DeleteCommand}" />
 
+            <Button  Content="Manual"
+                     Name="ManualDialButton"
+                     Width="60"
+                     Margin="5,0,0,0"
+                     Padding="5,2,5,2"
+                     Command="{Binding ManualDialCommand}" />
+
         </StackPanel>
 
     </Grid>

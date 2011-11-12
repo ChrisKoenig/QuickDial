@@ -1,0 +1,33 @@
+﻿<Window x:Class="QuickDial.DialDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="400"
+        Height="135"
+        Title="Manual Dialer"
+        ResizeMode="NoResize"
+        ShowInTaskbar="True"
+        SizeToContent="Manual"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="PhoneNumberTextBlock"
+                 Margin="20,20,5,20"
+                 KeyDown="PhoneNumberTextBlock_KeyDown"
+                 Text=""
+                 TextAlignment="Left"
+                 VerticalContentAlignment="Center"
+                 Padding="6"
+                 FontSize="24"
+                 GotFocus="PhoneNumberTextBlock_GotFocus" />
+        <Button x:Name="DialNumberButton"
+                Grid.Column="1"
+                Content="Dial"
+                Padding="10"
+                Margin="5,20"
+                Click="DialNumberButton_Click"
+                FontSize="24" />
+    </Grid>
+</Window>

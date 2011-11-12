@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -18,33 +16,37 @@ namespace QuickDial
     /// </summary>
     public partial class Window1 : Window
     {
-        WindowState lastWindowState;
-        bool shouldClose;
-        AutomationModalities conversationModes = AutomationModalities.Audio;
-        Dictionary<AutomationModalitySettings, object> conversationSettings =
-                new Dictionary<AutomationModalitySettings, object>();
+        private WindowState lastWindowState;
+        private bool shouldClose;
+        private readonly AutomationModalities conversationModes = AutomationModalities.Audio;
+        private readonly Dictionary<AutomationModalitySettings, object> conversationSettings = new Dictionary<AutomationModalitySettings, object>();
 
-        MenuItem _openMenuItem;
-        MenuItem _exitMenuItem;
-        MenuItem _spacer1MenuItem;
-        MenuItem _spacer2MenuItem;
+        private readonly MenuItem _openMenuItem;
+        private readonly MenuItem _exitMenuItem;
+        private readonly MenuItem _spacer1MenuItem;
+        private readonly MenuItem _spacer2MenuItem;
+        private readonly MenuItem _spacer3MenuItem;
+        private readonly MenuItem _dialMenuItem;
 
-        MainViewModel vm;
+        private MainViewModel vm;
 
         public Window1()
         {
             InitializeComponent();
 
+            _dialMenuItem = new MenuItem("Manual Dial", OnDialMenuClick);
             _openMenuItem = new MenuItem("Open", OnMenuItemOpenClick);
             _exitMenuItem = new MenuItem("Exit", OnMenuItemExitClick);
             _spacer1MenuItem = new MenuItem("-");
             _spacer2MenuItem = new MenuItem("-");
+            _spacer3MenuItem = new MenuItem("-");
 
             Loaded += (s, e) =>
             {
                 vm = new MainViewModel();
                 DataContext = vm;
                 Messenger.Default.Register<ResetMenuItemsMessage>(this, (m) => ResetMenuItems());
+                Messenger.Default.Register<OpenManualDialerMessage>(this, (m) => ShowDialDialog());
                 ResetMenuItems();
             };
         }
@@ -71,6 +73,17 @@ namespace QuickDial
             }
         }
 
+        private void OnDialMenuClick(object sender, EventArgs e)
+        {
+            ShowDialDialog();
+        }
+
+        private void ShowDialDialog()
+        {
+            var dialer = new DialDialog();
+            dialer.ShowDialog();
+        }
+
         private void OnMenuItemOpenClick(object sender, EventArgs e)
         {
             Open();
@@ -93,6 +106,8 @@ namespace QuickDial
             SuperMenu.MenuItems.Clear();
             SuperMenu.MenuItems.Add(_openMenuItem);
             SuperMenu.MenuItems.Add(_spacer1MenuItem);
+            SuperMenu.MenuItems.Add(_dialMenuItem);
+            SuperMenu.MenuItems.Add(_spacer2MenuItem);
             var temp = from c in vm.Contacts
                        where c.ShowOnQuickLaunch == true
                        select new MenuItem()
@@ -106,7 +121,7 @@ namespace QuickDial
                 item.Click += CallContact;
                 SuperMenu.MenuItems.Add(item);
             }
-            SuperMenu.MenuItems.Add(_spacer2MenuItem);
+            SuperMenu.MenuItems.Add(_spacer3MenuItem);
             SuperMenu.MenuItems.Add(_exitMenuItem);
             SuperMenu.ResetMenuItems();
         }
